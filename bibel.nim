@@ -5,19 +5,15 @@ import strutils
 import system
 import os
 
+# echt cool, embeddet die JSON Bibel in der Binary
+const bible_raw = staticRead("de_schlachter.json")
+
 # Ich initialisiere den Radomizer, sonst kommt immer das Gleiche
 randomize()
 
 # Anzahl der mitgegebenen Werte
 let param_num = paramCount()
 
-try:
-  let bible_test = readFile(fmt"{getAppDir()}/de_schlachter.json")
-except(IOError):
-  echo "Die Datei 'de_schlachter.json' muss im gleichen Ordner wie das Programm sein."
-  quit()
-
-let bible_raw = readFile(fmt"{getAppDir()}/de_schlachter.json")
 let bible = parseJson(bible_raw)
 
 try:
@@ -55,7 +51,6 @@ try:
 
   elif capitalizeAscii(input[1]) in ["Suche", "Such", "Search"]:
     var searchList = input[2..input.len - 1]
-    #var finding: seq[ array[2, string] ]
     var finding: seq[string]
 
     for book in bible:
